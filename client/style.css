@@ -2,20 +2,116 @@ html, body {
   height: 100%;
   width: 100%;
   margin: 0;
-  padding: 0;
+  background-color: maroon;
 }
 
-#top {
-  text-align: center;
-  margin: 0 auto;
+body {
+  display: flex;
+  flex-direction: column;
 }
 
-#top h1 {
-  font-size: 2em;
+.panel {
+  background-color: gray;
+  margin: 0.5rem;
+  padding: 0.25rem 2rem;
 }
 
-#content {
-  margin-top: 100px;
-  font-size: 2em;
-  text-align: center;
+header {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header > h1 {
+  flex: 0 0 50%;
+  font-size: 2.5rem;
+}
+
+#header-controls {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#header-controls #out-header-status {
+  flex: 0 0 20%;
+}
+
+main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+}
+
+main > .panel {
+  flex: 1 1 50%;
+  height: 100%;
+}
+
+.tippy-box {
+  font-size: 0.75rem;
+}
+
+button,
+span,
+label,
+input {
+  font-size: 1.33rem;
+}
+
+button,
+input {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+button {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+input {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.control {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  grid-gap: 0.5rem;
+  align-items: center;
+}
+
+.control-text input + label {
+  position: relative;
+  transition: all 0.5s cubic-bezier(0,.8,0,1);
+}
+
+.control-text input + label::before {
+  z-index: -1;
+  content: '';
+  top: -0.25rem;
+  left: -0.75rem;
+  bottom: -0.25rem;
+  right: -0.75rem;
+  position: absolute;
+  background-color: white;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0,.8,0,1);
+}
+
+.control-text input:focus + label::before {
+  opacity: 1;
+}
+
+.control-text input:focus + label {
+  transform: translate(150%, -100%) scale(0.8);
 }

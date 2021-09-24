@@ -26,9 +26,11 @@
         allowHTML: true,
         animateFill: true,
         animation: 'shift-away',
+        appendTo: () => document.body,
         followCursor: 'horizontal',
         inertia: true,
         interactive: true,
+        maxWidth: 300,
       }
       controls.headerCheck = {
         control: document.querySelector('#in-check'),
@@ -62,7 +64,9 @@
   </script>
 </head>
 <body>
-  <header>
+  <header
+    class="panel"
+  >
     <h1>Cryptid Keeper</h1>
     <div
       id="header-controls"
@@ -70,16 +74,16 @@
       <div
         class="control control-text"
       >
-        <label
-          for="input-find"
-        >
-          find:
-        </label>
         <input
           id="in-find"
           type="text"
           placeholder=""
         />
+        <label
+          for="input-find"
+        >
+          find
+        </label>
       </div>
 
       <div
