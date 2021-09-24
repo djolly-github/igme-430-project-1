@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
-  background-color: maroon;
+  background-color: #1a1211;
+  overflow-y: hidden;
+  font-family: 'Special Elite', cursive;
+  line-height: 1.1em;
 }
 
 body {
@@ -11,7 +16,7 @@ body {
 }
 
 .panel {
-  background-color: gray;
+  background-color: #aca9a9;
   margin: 0.5rem;
   padding: 0.25rem 2rem;
 }
@@ -51,12 +56,19 @@ main {
 }
 
 main > .panel {
-  flex: 1 1 50%;
   height: 100%;
 }
 
+main > .panel:nth-of-type(1) {
+  flex: 1 1 70%;
+}
+
+main > .panel:nth-of-type(2) {
+  flex: 1 1 30%;
+}
+
 .tippy-box {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
 }
 
 button,
@@ -64,17 +76,21 @@ span,
 label,
 input {
   font-size: 1.33rem;
+  font-family: 'Special Elite', cursive;
 }
 
 button,
 input {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #778a8c;
 }
 
 button {
   padding-left: 3rem;
   padding-right: 3rem;
+  background-color: #a4b2b4;
 }
 
 input {
@@ -103,7 +119,8 @@ input {
   bottom: -0.25rem;
   right: -0.75rem;
   position: absolute;
-  background-color: white;
+  background-color: #aca9a9;
+  border-radius: 0.25rem;
   opacity: 0;
   transition: all 0.5s cubic-bezier(0,.8,0,1);
 }
@@ -113,5 +130,25 @@ input {
 }
 
 .control-text input:focus + label {
-  transform: translate(150%, -100%) scale(0.8);
+  transform: translate(150%, -110%) scale(0.8);
+}
+
+
+@media screen and (max-width: 1250px) {
+  html {
+    font-size: 0.75em;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  header {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  #header-controls {
+    justify-content: left;
+    width: 100%;
+    grid-gap: 2rem;
+  }
 }
