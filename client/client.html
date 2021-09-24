@@ -5,78 +5,71 @@
   <title>Our simple HTTP server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
   <script type="text/babel">
-    const domParser = new DOMParser();
-
-    // takes response (parsed to JS object) and dumps it to page content
-    const handleData = (response) => {
-      const content = document.querySelector('#content');
-      content.innerHTML = `<h2>${response.id ? response.id : 'SUCCESS'}</h2>${response.message ? `<p>Message: ${response.message}</p>` : '<p>no message returned</p>'}`;
-    };
-
-    // takes form data and creates XHR
-    const requestData = (e, form) => {
-      const page = form.querySelector('#page').value;
-      const type = form.querySelector('#type').value;
-
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', page);
-      xhr.setRequestHeader('Accept', type);
-      xhr.onload = () => {
-        let parsedResponse = {};
-
-        if (type === 'text/xml') {
-          parsedResponse = domParser.parseFromString(xhr.response, 'application/xml');
-          console.log(parsedResponse);
-
-          // extra parsing to work with handleData
-          parsedResponse = {
-            message: (parsedResponse.documentElement.querySelector('message') || {}).innerHTML,
-            id: (parsedResponse.documentElement.querySelector('id') || {}).innerHTML,
-          };
-          handleData(parsedResponse);
-        } else {
-          parsedResponse = JSON.parse(xhr.response);
-          console.log(parsedResponse);
-
-          // no extra parsing needed to work with handleData
-          handleData(parsedResponse);
-        }
-      };
-      xhr.send();
-    };
-
-    // adds listener to form submit on load
-    window.onload = () => {
-      const userForm = document.querySelector('#userForm');
-      const getData = (e) => requestData(e, userForm);
-      window.addEventListener('submit', (e) => {
-        e.preventDefault();
-        getData(e);
-      });
-    };
+    // code goes here
   </script>
 </head>
 <body>
-  <section id="top">
-    <h3>Status Code Tests</h3>
-    <form id="userForm">
-      <select id="page">
-        <option value="/success">Success</option>
-        <option value="/badRequest">Bad Request</option>
-        <option value="/unauthorized">Unauthorized</option>
-        <option value="/forbidden">Forbidden</option>
-        <option value="/internal">Internal</option>
-        <option value="/notImplemented">Not Implemented</option>
-        <option value="/notFound">Not Found</option>
-      </select>
-      <select id="type">
-        <option value="application/json">JSON</option>
-        <option value="text/xml">XML</option>
-      </select>
-      <button id="send">Send</button>
-    </form>
-  </section>
-  <section id="content">
-  </section>
+  <header>
+    <h1>Cryptid Keeper</h1>
+    <div
+      id="header-controls"
+    >
+      <div
+        class="control control-text"
+      >
+        <label
+          for="input-find"
+        >
+          find:
+        </label>
+        <input
+          id="in-find"
+          type="text"
+          placeholder=""
+        />
+      </div>
+
+      <div
+        class="control control-button"
+      >
+        <button
+          id="in-check"
+        >
+          Check
+        </button>
+      </div>
+
+      <div
+        class="control control-button"
+      >
+        <button
+          id="in-load"
+        >
+          Load
+        </button>
+      </div>
+
+      <div
+        class="status"
+        id="out-header-status"
+      >
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div
+      class="panel"
+      id="panel-left"
+    >
+    </div>
+
+    <div
+      class="panel"
+      id="panel-right"
+    >
+    </div>
+  </main>
 </body>
 </html>
