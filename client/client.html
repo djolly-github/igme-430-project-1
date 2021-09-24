@@ -3,9 +3,62 @@
 <head>
   <meta charset="utf-8"/>
   <title>Our simple HTTP server</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/shift-away.css" />
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/backdrop.css" />
   <link rel="stylesheet" type="text/css" href="/style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+
   <script type="text/babel">
     // code goes here
+    let controls = {
+      headerCheck: null,
+      headerLoad: null,
+      headerFind: null,
+      headerStatus: null,
+    }
+
+    window.onload = () => {
+      const defaultTooltipOptions = {
+        allowHTML: true,
+        animateFill: true,
+        animation: 'shift-away',
+        followCursor: 'horizontal',
+        inertia: true,
+        interactive: true,
+      }
+      controls.headerCheck = {
+        control: document.querySelector('#in-check'),
+        tooltip: tippy('#in-check', {
+          ...defaultTooltipOptions,
+          content: 'Check whether the character with the inputted name exists<br/>DEV NOTE: Performs <code>HEAD</code> request',
+        }),
+      };
+      controls.headerLoad = {
+        control: document.querySelector('#in-load'),
+        tooltip: tippy('#in-load', {
+          ...defaultTooltipOptions,
+          content: 'Loads a character into the creator (assuming the inputted name exists)<br/>DEV NOTE: Performs <code>GET</code> request',
+        }),
+      };
+      controls.headerFind = {
+        control: document.querySelector('#in-find'),
+        tooltip: tippy('#in-find', {
+          ...defaultTooltipOptions,
+          content: 'The name of the character to search/load (case and space sensitive)',
+        }),
+      };
+      controls.headerStatus = {
+        control: document.querySelector('#out-header-status span'),
+        tooltip: tippy('#out-header-status span', {
+          ...defaultTooltipOptions,
+          content: '',
+        }),
+      };
+    }
   </script>
 </head>
 <body>
