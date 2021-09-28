@@ -13,7 +13,6 @@
   <script src="https://unpkg.com/tippy.js@6"></script>
 
   <script type="text/babel">
-    // code goes here
     let controls = {
       headerCheck: null,
       headerLoad: null,
@@ -28,6 +27,7 @@
     const setupSelectors = (group, key) => {
       group.dataset.selected = 0;
       let children = group.querySelectorAll('.portrait');
+      children[0].classList.add('selected');
       for (let i = 0; i < children.length; i++) {
         children[i].dataset.value = i;
         children[i].dataset.target = key;
@@ -40,7 +40,10 @@
           // to the value of the event target
           // using event target's target as key
           controls[caller.dataset.target].dataset.selected = caller.dataset.value;
-          console.log(controls[caller.dataset.target].dataset.selected);
+          for (const child of controls[caller.dataset.target].children) {
+            child.classList.remove('selected');
+          }
+          caller.classList.add('selected');
         });
       }
     }
@@ -102,6 +105,7 @@
   >
     <h1>Cryptid Keeper</h1>
     <div
+      class="control-group"
       id="header-controls"
     >
       <div
@@ -113,7 +117,7 @@
           placeholder=""
         />
         <label
-          for="input-find"
+          for="in-find"
         >
           find
         </label>
@@ -307,6 +311,126 @@
       class="panel"
       id="panel-right"
     >
+      <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+      <div
+        class="control control-text"
+      >
+        <input
+          id="in-name"
+          type="text"
+          placeholder=""
+        />
+        <label
+          for="in-name"
+        >
+          name
+        </label>
+      </div>
+      <div
+        id="group-stats"
+        class="control-group"
+      >
+        <div
+          class="control control-text"
+        >
+        <input
+          id="in-stat-per"
+          type="number"
+        />
+        <label
+          for="in-stat-per"
+        >
+          PER
+        </label>
+        </div>
+        <div
+          class="control control-text"
+        >
+        <input
+          id="in-stat-wit"
+          type="number"
+        />
+        <label
+          for="in-stat-wit"
+        >
+          WIT
+        </label>
+        </div>
+        <div
+          class="control control-text"
+        >
+        <input
+          id="in-stat-wil"
+          type="number"
+        />
+        <label
+          for="in-stat-wil"
+        >
+          WIL
+        </label>
+        </div>
+        <div
+          class="control control-text"
+        >
+        <input
+          id="in-stat-end"
+          type="number"
+        />
+        <label
+          for="in-stat-end"
+        >
+          END
+        </label>
+        </div>
+        <div
+          class="control control-text"
+        >
+        <input
+          id="in-stat-str"
+          type="number"
+        />
+        <label
+          for="in-stat-str"
+        >
+          STR
+        </label>
+        </div>
+        <div
+          class="control control-text"
+        >
+        <input
+          id="in-stat-agi"
+          type="number"
+        />
+        <label
+          for="in-stat-agi"
+        >
+          AGI
+        </label>
+        </div>
+      </div>
+      <div
+        class="control-group"
+      >
+        <div
+          class="control control-button"
+        >
+          <button
+            id="in-save"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          class="control control-button"
+        >
+          <button
+            id="in-reset"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
     </div>
   </main>
 </body>

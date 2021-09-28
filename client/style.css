@@ -30,11 +30,14 @@ header > h1 {
   font-size: 2.5rem;
 }
 
-#header-controls {
-  flex: 1 1 auto;
+.control-group {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
+}
+
+#header-controls {
+  flex: 1 1 auto;
   justify-content: space-around;
   align-items: center;
 }
@@ -153,17 +156,57 @@ input {
   flex-direction: column;
   text-align: center;
   grid-gap: 0.25rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .portrait > img {
+  flex: 1 1 auto;
   width: 100%;
   height: auto;
+  border: 2px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.5s cubic-bezier(.75,.25,.25,.75);
 }
 
 .portrait > p {
   background-color: #aca9a9aa;
   border-radius: 0.25rem;
   padding: 0.25rem 0;
+  width: 100%;
+}
+
+.selected > img {
+  border-color: white;
+}
+
+#panel-right {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+#panel-right > * {
+  margin-top: 0.5rem;
+}
+
+#panel-right > img {
+  width: 100%;
+  height: auto;
+  margin-top: 0;
+}
+
+#group-stats {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#group-stats input {
+  max-width: 5rem;
+}
+
+#group-stats label {
+  font-family: monospace;
 }
 
 @media screen and (max-width: 1250px) {
