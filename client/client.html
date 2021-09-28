@@ -19,9 +19,42 @@
       headerLoad: null,
       headerFind: null,
       headerStatus: null,
+      selectorSpecies: null,
+      selectorPattern: null,
+      selectorOutfit: null,
+      selectorWeapon: null,
+    }
+
+    const setupSelectors = (group, key) => {
+      group.dataset.selected = 0;
+      let children = group.querySelectorAll('.portrait');
+      for (let i = 0; i < children.length; i++) {
+        children[i].dataset.value = i;
+        children[i].dataset.target = key;
+        children[i].addEventListener('click', (e) => {
+          let caller = e.target;
+          if (caller.classList !== 'portrait') {
+            caller = caller.parentNode;
+          }
+          // set the controls parent group value
+          // to the value of the event target
+          // using event target's target as key
+          controls[caller.dataset.target].dataset.selected = caller.dataset.value;
+          console.log(controls[caller.dataset.target].dataset.selected);
+        });
+      }
     }
 
     window.onload = () => {
+      controls.selectorSpecies = document.querySelector('#selector-species');
+      controls.selectorPattern = document.querySelector('#selector-pattern');
+      controls.selectorOutfit = document.querySelector('#selector-outfit');
+      controls.selectorWeapon = document.querySelector('#selector-weapon');
+      setupSelectors(controls.selectorSpecies, 'selectorSpecies');
+      setupSelectors(controls.selectorPattern, 'selectorPattern');
+      setupSelectors(controls.selectorOutfit, 'selectorOutfit');
+      setupSelectors(controls.selectorWeapon, 'selectorWeapon');
+
       const defaultTooltipOptions = {
         allowHTML: true,
         animateFill: true,
@@ -120,46 +153,154 @@
       class="panel"
       id="panel-left"
     >
+      <!-- Species -->
       <div
         class="selector"
         id="selector-species"
       >
         <div
           class="portrait"
-          onclick="console.log('Werewolf');"
         >
           <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
           <p>Werewolf</p>
         </div>
         <div
           class="portrait"
-          onclick="console.log('Weremoth');"
         >
           <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
           <p>Weremoth</p>
         </div>
         <div
           class="portrait"
-          onclick="console.log('chup');"
         >
           <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
           <p>Chupacabra</p>
         </div>
         <div
           class="portrait"
-          onclick="console.log('devil');"
         >
           <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
           <p>Jersey Devil</p>
         </div>
         <div
           class="portrait"
-          onclick="console.log('ahool');"
         >
           <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
           <p>Ahool</p>
         </div>
       </div>
+
+      <!-- Pattern -->
+      <div
+        class="selector"
+        id="selector-pattern"
+      >
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Pattern 1</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Pattern 2</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Pattern 3</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Pattern 4</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Pattern 5</p>
+        </div>
+      </div>
+
+      <!-- Outfit -->
+      <div
+        class="selector"
+        id="selector-outfit"
+      >
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Nothing</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Light Robes</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Heavy Robes</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Light Armor</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Heavy Armor</p>
+        </div>
+      </div>
+
+      <!-- Weapon -->
+      <div
+        class="selector"
+        id="selector-weapon"
+      >
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Unarmed</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Bow</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Daggers</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Staff</p>
+        </div>
+        <div
+          class="portrait"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+          <p>Sword and Shield</p>
+        </div>
+      </div>
+
     </div>
 
     <div
