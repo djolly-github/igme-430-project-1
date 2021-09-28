@@ -133,6 +133,35 @@ input {
   transform: translate(150%, -110%) scale(0.8);
 }
 
+#panel-left {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.selector {
+  flex: 0 0 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  grid-gap: 1rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  background-color: #947671;
+}
+
+.portrait {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  grid-gap: 0.25rem;
+}
+
+.portrait > img {
+  width: 100%;
+  height: auto;
+}
 
 @media screen and (max-width: 1250px) {
   html {
