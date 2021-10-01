@@ -98,6 +98,10 @@ input {
   padding-right: 0.25rem;
 }
 
+input:invalid {
+  border-color: red;
+}
+
 .control {
   position: relative;
   display: flex;

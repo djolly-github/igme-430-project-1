@@ -23,6 +23,10 @@
       selectorOutfit: null,
       selectorWeapon: null,
       selectorImages: null,
+      characterSave: null,
+      characterReset: null,
+      characterStats: null,
+      characterName: null,
     }
 
     const options = {
@@ -144,6 +148,13 @@
       }
     };
 
+    const validate = () => {
+      if ((document.querySelectorAll('input:invalid') || []).length > 0) {
+        return false;
+      }
+      return true;
+    };
+
     window.onload = () => {
       controls.selectorSpecies = document.querySelector('#selector-species');
       controls.selectorPattern = document.querySelector('#selector-pattern');
@@ -198,6 +209,35 @@
           content: '',
         }),
       };
+      controls.characterName = {
+        control: document.querySelector('#in-name'),
+        tooltip: tippy('#in-name', {
+          ...defaultTooltipOptions,
+          content: 'The name of the character (will be case/space sensitive when searching)',
+        }),
+      };
+      controls.characterSave = {
+        control: document.querySelector('#in-save'),
+        tooltip: tippy('#in-save', {
+          ...defaultTooltipOptions,
+          content: 'Saves the character',
+        }),
+      };
+      controls.characterReset = {
+        control: document.querySelector('#in-reset'),
+        tooltip: tippy('#in-reset', {
+          ...defaultTooltipOptions,
+          content: 'Resets all inputs back to default',
+        }),
+      };
+
+      controls.characterSave.control.addEventListener('click', (e) => {
+        if (validate()) {
+          console.log('valid info!');
+        } else {
+          console.log('invalid info!');
+        }
+      });
     };
   </script>
 </head>
@@ -308,6 +348,7 @@
           id="in-name"
           type="text"
           placeholder=""
+          required
         />
         <label
           for="in-name"
@@ -325,6 +366,10 @@
         <input
           id="in-stat-per"
           type="number"
+          value="0"
+          required
+          min="-10"
+          max="10"
         />
         <label
           for="in-stat-per"
@@ -338,6 +383,10 @@
         <input
           id="in-stat-wit"
           type="number"
+          value="0"
+          required
+          min="-10"
+          max="10"
         />
         <label
           for="in-stat-wit"
@@ -351,6 +400,10 @@
         <input
           id="in-stat-wil"
           type="number"
+          value="0"
+          required
+          min="-10"
+          max="10"
         />
         <label
           for="in-stat-wil"
@@ -364,6 +417,10 @@
         <input
           id="in-stat-end"
           type="number"
+          value="0"
+          required
+          min="-10"
+          max="10"
         />
         <label
           for="in-stat-end"
@@ -377,6 +434,10 @@
         <input
           id="in-stat-str"
           type="number"
+          value="0"
+          required
+          min="-10"
+          max="10"
         />
         <label
           for="in-stat-str"
@@ -390,6 +451,10 @@
         <input
           id="in-stat-agi"
           type="number"
+          value="0"
+          required
+          min="-10"
+          max="10"
         />
         <label
           for="in-stat-agi"
