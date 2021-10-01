@@ -191,10 +191,22 @@ input {
   margin-top: 0.5rem;
 }
 
-#panel-right > img {
+#panel-right .preview {
+  position: relative;
   width: 100%;
-  height: auto;
+  height: 40vh;
   margin-top: 0;
+}
+
+#panel-right .preview div {
+  position: absolute;
+  width: 40vh;
+  height: 40vh;
+  background-size: 200vh;
+  margin: auto;
+  left: 0;
+  right: 0;
+  transition: all 0.5s cubic-bezier(.75,.25,.25,.75);
 }
 
 #group-stats {

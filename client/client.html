@@ -22,6 +22,7 @@
       selectorPattern: null,
       selectorOutfit: null,
       selectorWeapon: null,
+      selectorImages: null,
     }
 
     const options = {
@@ -55,6 +56,15 @@
       ]
     }
 
+    const getCurrentValues = () => {
+      return [
+        controls.selectorSpecies.dataset.selected,
+        controls.selectorPattern.dataset.selected,
+        controls.selectorOutfit.dataset.selected,
+        controls.selectorWeapon.dataset.selected,
+      ];
+    }
+
     const replaceUrl = (urlToUse) => {
       const patterns = controls.selectorPattern.querySelectorAll('.portrait > div');
       const outfits = controls.selectorOutfit.querySelectorAll('.portrait > div');
@@ -71,7 +81,17 @@
       weapons.forEach((child) => {
         child.style.backgroundImage = `url(${urlToUse})`;
       });
-    }
+      
+      controls.selectorImages.forEach((child) => {
+        child.style.backgroundImage = `url(${urlToUse})`;
+      });
+    };
+
+    const setRightPanelImages = (currentValues) => {
+      for (let i = 0; i < controls.selectorImages.length; i++) {
+        controls.selectorImages[i].style.backgroundPosition = `${25 * currentValues[i]}% ${25 * i}%`;
+      }
+    };
 
     const setupImages = (group, optionsForGroup, rowInSheet) => {
       for (let i = 0; i < optionsForGroup.length; i++) {
@@ -88,7 +108,11 @@
         `;
         group.appendChild(el);
       }
-    }
+
+      controls.selectorImages.forEach((child) => {
+        child.style.backgroundImage = 'url(werewolf.png)';
+      });
+    };
 
     const setupSelectors = (group, key) => {
       group.dataset.selected = 0;
@@ -114,15 +138,18 @@
           if (caller.dataset.target === 'selectorSpecies') {
             replaceUrl(`${options.species[caller.dataset.value].replace(' ', '_')}.png`);
           }
+
+          setRightPanelImages(getCurrentValues());
         });
       }
-    }
+    };
 
     window.onload = () => {
       controls.selectorSpecies = document.querySelector('#selector-species');
       controls.selectorPattern = document.querySelector('#selector-pattern');
       controls.selectorOutfit = document.querySelector('#selector-outfit');
       controls.selectorWeapon = document.querySelector('#selector-weapon');
+      controls.selectorImages = document.querySelectorAll('#panel-right .preview div');
       setupImages(controls.selectorSpecies, options.species, 0);
       setupImages(controls.selectorPattern, options.pattern, 1);
       setupImages(controls.selectorOutfit, options.outfit, 2);
@@ -131,6 +158,7 @@
       setupSelectors(controls.selectorPattern, 'selectorPattern');
       setupSelectors(controls.selectorOutfit, 'selectorOutfit');
       setupSelectors(controls.selectorWeapon, 'selectorWeapon');
+      setRightPanelImages(getCurrentValues());
 
       const defaultTooltipOptions = {
         allowHTML: true,
@@ -170,7 +198,7 @@
           content: '',
         }),
       };
-    }
+    };
   </script>
 </head>
 <body>
@@ -265,7 +293,14 @@
       class="panel"
       id="panel-right"
     >
-      <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Wolf_O%27Donnell_%28character%29.png" alt=""/>
+      <div
+        class="preview"
+      >
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       <div
         class="control control-text"
       >
