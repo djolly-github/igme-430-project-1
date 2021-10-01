@@ -1,11 +1,19 @@
 const fs = require('fs');
 
 /**
+ * The file and content-type for the index image
+ */
+const indexImage = {
+  file: fs.readFileSync(`${__dirname}/../client/client.png`),
+  type: 'image/png',
+};
+
+/**
  * The file and content-type for the index page
  */
 const indexPage = {
   file: fs.readFileSync(`${__dirname}/../client/client.html`),
-  type: 'html',
+  type: 'text/html',
 };
 
 /**
@@ -13,7 +21,7 @@ const indexPage = {
  */
 const indexStyle = {
   file: fs.readFileSync(`${__dirname}/../client/style.css`),
-  type: 'css',
+  type: 'text/css',
 };
 
 /**
@@ -23,10 +31,17 @@ const indexStyle = {
  * @param {object} page the page to load, contains page.file and page.type
  */
 const getFile = (request, response, page) => {
-  response.writeHead(200, { 'Content-Type': `text/${page.type}` });
+  response.writeHead(200, { 'Content-Type': page.type });
   response.write(page.file);
   response.end();
 };
+
+/**
+ * Gets the index image
+ * @param {object} request XHR request object
+ * @param {object} response XHR response object
+ */
+const getImage = (request, response) => getFile(request, response, indexImage);
 
 /**
  * Gets the index page
@@ -43,6 +58,7 @@ const getIndex = (request, response) => getFile(request, response, indexPage);
 const getStyle = (request, response) => getFile(request, response, indexStyle);
 
 module.exports = {
+  getImage,
   getIndex,
   getStyle,
 };

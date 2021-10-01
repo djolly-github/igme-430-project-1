@@ -13,6 +13,7 @@ const processableURLCollection = {
   GET: {
     '/': htmlHandler.getIndex,
     '/style.css': htmlHandler.getStyle,
+    '/client.png': htmlHandler.getImage,
     '/success': jsonHandler.success,
     '/badRequest': jsonHandler.badRequest,
     '/unauthorized': jsonHandler.unauthorized,
