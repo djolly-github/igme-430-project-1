@@ -167,7 +167,6 @@ input {
   border: 0.2rem solid black;
   border-radius: 0.25rem;
   transition: all 0.5s cubic-bezier(.75,.25,.25,.75);
-  background-image: url('client.png');
   box-sizing: border-box;
 }
 

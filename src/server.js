@@ -3,6 +3,7 @@ const url = require('url');
 const query = require('querystring');
 const htmlHandler = require('./htmlResponses');
 const jsonHandler = require('./jsonResponses');
+const imgHandler = require('./imageResponses');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -13,7 +14,12 @@ const processableURLCollection = {
   GET: {
     '/': htmlHandler.getIndex,
     '/style.css': htmlHandler.getStyle,
-    '/client.png': htmlHandler.getImage,
+    '/ahool.png': imgHandler.getAhool,
+    '/chupacabra.png': imgHandler.getChupacabra,
+    '/client.png': imgHandler.getClient,
+    '/jersey_devil.png': imgHandler.getJersey,
+    '/weremoth.png': imgHandler.getWeremoth,
+    '/werewolf.png': imgHandler.getWerewolf,
     '/success': jsonHandler.success,
     '/badRequest': jsonHandler.badRequest,
     '/unauthorized': jsonHandler.unauthorized,

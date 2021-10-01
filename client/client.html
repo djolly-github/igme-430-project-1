@@ -55,13 +55,34 @@
       ]
     }
 
+    const replaceUrl = (urlToUse) => {
+      const patterns = controls.selectorPattern.querySelectorAll('.portrait > div');
+      const outfits = controls.selectorOutfit.querySelectorAll('.portrait > div');
+      const weapons = controls.selectorWeapon.querySelectorAll('.portrait > div');
+
+      patterns.forEach((child) => {
+        child.style.backgroundImage = `url(${urlToUse})`;
+      });
+
+      outfits.forEach((child) => {
+        child.style.backgroundImage = `url(${urlToUse})`;
+      });
+
+      weapons.forEach((child) => {
+        child.style.backgroundImage = `url(${urlToUse})`;
+      });
+    }
+
     const setupImages = (group, optionsForGroup, rowInSheet) => {
       for (let i = 0; i < optionsForGroup.length; i++) {
         let el = document.createElement('div');
         el.classList.add('portrait');
+        const pos = `background-position: ${25 * i}% ${25 * rowInSheet}%`;
+        const size = `background-size: ${7.2*optionsForGroup.length}vh`;
+        const url = `background-image: url(werewolf.png)`;
         el.innerHTML = `
           <div
-            style="background-position: ${25 * i}% ${25 * rowInSheet}%; background-size: ${7.2*optionsForGroup.length}vh;"
+            style="${pos}; ${size}; ${url};"
           ></div>
           <p>${optionsForGroup[i]}</p>
         `;
@@ -78,7 +99,7 @@
         children[i].dataset.target = key;
         children[i].addEventListener('click', (e) => {
           let caller = e.target;
-          if (caller.classList !== 'portrait') {
+          if (!caller.classList.contains('portrait')) {
             caller = caller.parentNode;
           }
           // set the controls parent group value
@@ -89,6 +110,10 @@
             child.classList.remove('selected');
           }
           caller.classList.add('selected');
+
+          if (caller.dataset.target === 'selectorSpecies') {
+            replaceUrl(`${options.species[caller.dataset.value].replace(' ', '_')}.png`);
+          }
         });
       }
     }

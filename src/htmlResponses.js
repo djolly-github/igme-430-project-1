@@ -1,14 +1,6 @@
 const fs = require('fs');
 
 /**
- * The file and content-type for the index image
- */
-const indexImage = {
-  file: fs.readFileSync(`${__dirname}/../client/client.png`),
-  type: 'image/png',
-};
-
-/**
  * The file and content-type for the index page
  */
 const indexPage = {
@@ -37,13 +29,6 @@ const getFile = (request, response, page) => {
 };
 
 /**
- * Gets the index image
- * @param {object} request XHR request object
- * @param {object} response XHR response object
- */
-const getImage = (request, response) => getFile(request, response, indexImage);
-
-/**
  * Gets the index page
  * @param {object} request XHR request object
  * @param {object} response XHR response object
@@ -58,7 +43,6 @@ const getIndex = (request, response) => getFile(request, response, indexPage);
 const getStyle = (request, response) => getFile(request, response, indexStyle);
 
 module.exports = {
-  getImage,
   getIndex,
   getStyle,
 };
