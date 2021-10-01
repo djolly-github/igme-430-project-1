@@ -60,6 +60,27 @@
       ]
     }
 
+    const getStatus = (code) => {
+      switch (code) {
+        case 200:
+          return 'Completed Successfully';
+        case 201:
+          return 'Created Successfully';
+        case 204:
+          return 'Character Exists';
+        case 400:
+          return 'Invalid Data';
+        case 404:
+          return 'Does Not Exist';
+        case 500:
+          return 'Server Error';
+        case 501:
+          return 'Not Implemented';
+        default:
+          return 'Unknown Status';
+      }
+    }
+
     const getCurrentValues = () => {
       return [
         controls.selectorSpecies.dataset.selected,
@@ -204,10 +225,7 @@
       };
       controls.headerStatus = {
         control: document.querySelector('#out-header-status span'),
-        tooltip: tippy('#out-header-status span', {
-          ...defaultTooltipOptions,
-          content: '',
-        }),
+        tooltip: {},
       };
       controls.characterName = {
         control: document.querySelector('#in-name'),
@@ -277,9 +295,9 @@
 
       controls.characterSave.control.addEventListener('click', (e) => {
         if (validate()) {
-          console.log('valid info!');
+          controls.headerStatus.control.innerHTML = getStatus(501);
         } else {
-          console.log('invalid info!');
+          controls.headerStatus.control.innerHTML = getStatus(400);
         }
       });
       controls.characterReset.control.addEventListener('click', (e) => {
