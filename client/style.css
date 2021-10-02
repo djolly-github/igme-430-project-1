@@ -11,7 +11,7 @@ html, body {
 }
 
 .panel {
-  background-color: #aca9a9;
+  background-color: #c9c0c0;
   margin: 0.5%;
   padding: 0.25% 2rem;
 }
@@ -150,8 +150,8 @@ input:invalid {
   grid-gap: 1rem;
   flex-wrap: nowrap;
   background-color: #947671;
-  margin: 1rem 0;
-  padding: 1rem;
+  margin: 0.25rem 0;
+  padding: 0.25rem;
 }
 
 .portrait {
@@ -159,25 +159,29 @@ input:invalid {
   display: flex;
   flex-direction: column;
   text-align: center;
-  grid-gap: 0.25rem;
+  grid-gap: 0.1rem;
   justify-content: center;
   align-items: center;
 }
 
 .portrait > div {
   flex: 1 1 auto;
-  width: 7.2vh;
-  height: 7.2vh;
+  width: 16vh;
+  height: 16vh;
   border: 0.2rem solid black;
   border-radius: 0.25rem;
   transition: all 0.5s cubic-bezier(.75,.25,.25,.75);
   box-sizing: border-box;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .portrait > p {
   background-color: #aca9a9aa;
-  border-radius: 0.25rem;
-  padding: 0.25rem 0;
+  border-radius: 0.1rem;
+  padding: 0.1rem 0;
+  margin: 0.1rem 0.1rem;
   width: 100%;
 }
 
@@ -211,6 +215,14 @@ input:invalid {
   left: 0;
   right: 0;
   transition: all 0.5s cubic-bezier(.75,.25,.25,.75);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+#panel-right .preview div:nth-of-type(1) {
+  transition: none;
+  display: none;
 }
 
 #group-stats {
