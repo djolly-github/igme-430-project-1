@@ -14,6 +14,10 @@ const processableURLCollection = {
   GET: {
     '/': htmlHandler.getIndex,
     '/client.js': htmlHandler.getIndexJSMain,
+    '/client_define.js': htmlHandler.getIndexJSDefine,
+    '/client_util.js': htmlHandler.getIndexJSUtil,
+    '/client_setup.js': htmlHandler.getIndexJSSetup,
+    '/client_tippy.js': htmlHandler.getIndexJSTippy,
     '/style.css': htmlHandler.getStyle,
     '/ahool.png': imgHandler.getAhool,
     '/chupacabra.png': imgHandler.getChupacabra,
