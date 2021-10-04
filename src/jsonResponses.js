@@ -1,3 +1,24 @@
+const characters = [
+  {
+    name: 'Test Character',
+    stats: {
+      per: 6,
+      wit: 5,
+      wil: 4,
+      end: 3,
+      str: 2,
+      agi: 1,
+    },
+  },
+];
+
+/**
+ * Searches the characters array for the index of a specified character (compares the .name field)
+ * @param {object} other the character whose .name to search for
+ * @returns the index of the character, or -1 if none exists
+ */
+const findCharacter = (other) => characters.findIndex((character) => character.name === other.name);
+
 /**
  * Converts JSON to XML
  * @param {object} obj the JSON object to convert
@@ -36,14 +57,16 @@ const respond = (request, response, status, type, data) => {
   const validatedType = getValidType(type);
   response.writeHead(status, { 'Content-Type': validatedType });
 
-  let toWrite = data;
-  if (validatedType === 'text/xml') {
-    toWrite = toXML(data);
-  } else {
-    toWrite = JSON.stringify(data);
-  }
+  if (data) {
+    let toWrite = data;
+    if (validatedType === 'text/xml') {
+      toWrite = toXML(data);
+    } else {
+      toWrite = JSON.stringify(data);
+    }
 
-  response.write(toWrite);
+    response.write(toWrite);
+  }
   response.end();
 };
 
@@ -164,7 +187,16 @@ const unauthorized = (request, response, params) => {
 };
 
 const getCharacter = (request, response, params) => {
-  console.log(`method: ${request.method}`);
+  const indexOfCharacter = findCharacter({ name: params.name });
+  if (indexOfCharacter > -1) {
+    if (request.method === 'HEAD') {
+      respond(request, response, 204, request.headers.accept);
+    } else {
+      respond(request, response, 200, request.headers.accept, characters[indexOfCharacter]);
+    }
+  } else {
+    notFound(request, response);
+  }
 };
 
 const saveCharacter = (request, response, params) => {

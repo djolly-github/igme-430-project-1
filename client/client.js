@@ -1,5 +1,5 @@
 const xhrOnLoad = (xhr) => {
-  console.log('xhr on load');
+  console.log(xhr.response);
 }
 
 const getCharacter = (isCheck) => {
@@ -8,10 +8,10 @@ const getCharacter = (isCheck) => {
   const data = `name=${name}`;
 
   const xhr = new XMLHttpRequest();
-  xhr.open(method, '/getCharacter');
-  xhr.setRequestHeader('Accept', 'text/json');
+  xhr.open(method, `/getCharacter?${data}`);
+  xhr.setRequestHeader('Accept', 'application/json');
   xhr.onload = () => xhrOnLoad(xhr);
-  xhr.send(data);
+  xhr.send();
 }
 
 window.onload = () => {
