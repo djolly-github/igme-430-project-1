@@ -1,3 +1,19 @@
+const xhrOnLoad = (xhr) => {
+  console.log('xhr on load');
+}
+
+const getCharacter = (isCheck) => {
+  const name = controls.headerFind.control.value;
+  const method = isCheck ? 'HEAD' : 'GET';
+  const data = `name=${name}`;
+
+  const xhr = new XMLHttpRequest();
+  xhr.open(method, '/getCharacter');
+  xhr.setRequestHeader('Accept', 'text/json');
+  xhr.onload = () => xhrOnLoad(xhr);
+  xhr.send(data);
+}
+
 window.onload = () => {
   // reference left/right hand selectors
   controls.selectorSpecies = document.querySelector('#selector-species');
@@ -38,5 +54,15 @@ window.onload = () => {
     controls.characterStats.forEach((controlRef) => {
       controlRef.control.value = 0;
     });
+  });
+
+  // set header listeners
+  controls.headerCheck.control.addEventListener('click', (e) => {
+    e.preventDefault();
+    getCharacter(true);
+  });
+  controls.headerLoad.control.addEventListener('click', (e) => {
+    e.preventDefault();
+    getCharacter(false);
   });
 };
