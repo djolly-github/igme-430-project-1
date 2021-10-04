@@ -9,6 +9,12 @@ const characters = [
       str: 2,
       agi: 1,
     },
+    appearance: {
+      species: 1,
+      pattern: 2,
+      outfit: 3,
+      weapon: 4,
+    },
   },
 ];
 
@@ -200,7 +206,7 @@ const getCharacter = (request, response, params) => {
 };
 
 const saveCharacter = (request, response, params) => {
-  console.log('test save');
+  console.log(`test save | ${request} | ${response} | ${params}`);
 };
 
 module.exports = {

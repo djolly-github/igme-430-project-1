@@ -49,21 +49,9 @@ const setupSelectors = (group, key) => {
       if (!caller.classList.contains('portrait')) {
         caller = caller.parentNode;
       }
-      // set the controls parent group value
-      // to the value of the event target
-      // using event target's target as key
-      controls[caller.dataset.target].dataset.selected = caller.dataset.value;
 
-      // update selected class on all children
-      for (const child of controls[caller.dataset.target].children) {
-        child.classList.remove('selected');
-      }
-      caller.classList.add('selected');
-
-      // if the caller was from the species group, update the background image urls to the new species
-      if (caller.dataset.target === 'selectorSpecies') {
-        replaceUrl(`${options.species[caller.dataset.value].replace(' ', '_')}.png`);
-      }
+      // update the left panel selections
+      updateLeftPanelSelections(caller);
 
       // update the right panel tilesheet positions
       setRightPanelImages(getCurrentValues());

@@ -62,10 +62,61 @@ const replaceUrl = (urlToUse) => {
   });
 };
 
+// updates a group in the left panel based on the button caller that called this method
+const updateLeftPanelSelections = (caller) => {
+  // set the controls parent group value
+  // to the value of the event target
+  // using event target's target as key
+  controls[caller.dataset.target].dataset.selected = caller.dataset.value;
+
+  // update selected class on all children
+  for (const child of controls[caller.dataset.target].children) {
+    child.classList.remove('selected');
+  }
+  caller.classList.add('selected');
+
+  // if the caller was from the species group, update the background image urls to the new species
+  if (caller.dataset.target === 'selectorSpecies') {
+    replaceUrl(`${options.species[caller.dataset.value].replace(' ', '_')}.png`);
+  }
+}
+
+// updates a provided group in the left panel with the index of the selection
+const updateLeftPanelByIndex = (group, index) => {
+  updateLeftPanelSelections(group.children[index]);
+}
+
 // sets the background image positions for the right panel images (should run on left panel changes)
 // currentValues: array returned by getCurrentValues
 const setRightPanelImages = (currentValues) => {
   for (let i = 0; i < controls.selectorImages.length; i++) {
     controls.selectorImages[i].style.backgroundPosition = `${25 * currentValues[i]}% ${25 * i}%`;
   }
+};
+
+// sets the values of the right panel stats and name
+const setRightPanelFormValues = (name, stats) => {
+  controls.characterName.control.value = name;
+  controls.characterStats.forEach((controlRef) => {
+    switch(controlRef.control.id) {
+      case 'in-stat-per':
+        controlRef.control.value = stats.per;
+        break;
+      case 'in-stat-wit':
+        controlRef.control.value = stats.wit;
+        break;
+      case 'in-stat-wil':
+        controlRef.control.value = stats.wil;
+        break;
+      case 'in-stat-end':
+        controlRef.control.value = stats.end;
+        break;
+      case 'in-stat-str':
+        controlRef.control.value = stats.str;
+        break;
+      case 'in-stat-agi':
+        controlRef.control.value = stats.agi;
+        break;
+    }
+  })  
 };

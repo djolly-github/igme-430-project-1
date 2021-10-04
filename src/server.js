@@ -47,19 +47,24 @@ const processableURLCollection = {
   notFound: jsonHandler.notFound,
 };
 
-const validateCharacterStat = (statValue) => {
+const validateCharacterValue = (statValue) => {
   const num = parseInt(statValue, 10);
   return !Number.isNaN(num) && Number.isInteger(num) && num > -10 && num < 10;
 };
 
 const validateCharacter = (objectToValidate) => objectToValidate.name
   && objectToValidate.stats
-  && validateCharacterStat(objectToValidate.stats.per)
-  && validateCharacterStat(objectToValidate.stats.wit)
-  && validateCharacterStat(objectToValidate.stats.wil)
-  && validateCharacterStat(objectToValidate.stats.end)
-  && validateCharacterStat(objectToValidate.stats.str)
-  && validateCharacterStat(objectToValidate.stats.agi);
+  && objectToValidate.appearance
+  && validateCharacterValue(objectToValidate.stats.per)
+  && validateCharacterValue(objectToValidate.stats.wit)
+  && validateCharacterValue(objectToValidate.stats.wil)
+  && validateCharacterValue(objectToValidate.stats.end)
+  && validateCharacterValue(objectToValidate.stats.str)
+  && validateCharacterValue(objectToValidate.stats.agi)
+  && validateCharacterValue(objectToValidate.appearance.species)
+  && validateCharacterValue(objectToValidate.appearance.pattern)
+  && validateCharacterValue(objectToValidate.appearance.outfit)
+  && validateCharacterValue(objectToValidate.appearance.weapon);
 
 const onPost = (request, response, parsedUrl, params) => {
   if (parsedUrl.pathname === '/saveCharacter') {

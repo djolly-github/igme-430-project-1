@@ -1,5 +1,13 @@
 const xhrOnLoad = (xhr) => {
-  console.log(xhr.response);
+  controls.headerStatus.control.innerHTML = getStatus(xhr.status);
+  if (xhr.status === 200 && xhr.response) {
+    const parsedResponse = JSON.parse(xhr.response);
+    updateLeftPanelByIndex(controls.selectorSpecies, parsedResponse.appearance.species);
+    updateLeftPanelByIndex(controls.selectorPattern, parsedResponse.appearance.pattern);
+    updateLeftPanelByIndex(controls.selectorOutfit, parsedResponse.appearance.outfit);
+    updateLeftPanelByIndex(controls.selectorWeapon, parsedResponse.appearance.weapon);
+    setRightPanelFormValues(parsedResponse.name, parsedResponse.stats);
+  }
 }
 
 const getCharacter = (isCheck) => {
