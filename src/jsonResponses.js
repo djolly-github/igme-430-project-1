@@ -163,12 +163,22 @@ const unauthorized = (request, response, params) => {
   }
 };
 
+const getCharacter = (request, response, params) => {
+  console.log(`method: ${request.method}`);
+};
+
+const saveCharacter = (request, response, params) => {
+  console.log('test save');
+};
+
 module.exports = {
   badRequest,
   forbidden,
+  getCharacter,
   internal,
   notFound,
   notImplemented,
+  saveCharacter,
   success,
   unauthorized,
 };

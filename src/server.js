@@ -12,6 +12,7 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
  */
 const processableURLCollection = {
   GET: {
+    // client
     '/': htmlHandler.getIndex,
     '/client.js': htmlHandler.getIndexJSMain,
     '/client_define.js': htmlHandler.getIndexJSDefine,
@@ -19,12 +20,17 @@ const processableURLCollection = {
     '/client_setup.js': htmlHandler.getIndexJSSetup,
     '/client_tippy.js': htmlHandler.getIndexJSTippy,
     '/style.css': htmlHandler.getStyle,
+    '/getCharacter': jsonHandler.getCharacter,
+
+    // images
     '/ahool.png': imgHandler.getAhool,
     '/chupacabra.png': imgHandler.getChupacabra,
     '/client.png': imgHandler.getClient,
     '/jersey_devil.png': imgHandler.getJersey,
     '/weremoth.png': imgHandler.getWeremoth,
     '/werewolf.png': imgHandler.getWerewolf,
+
+    // test paths
     '/success': jsonHandler.success,
     '/badRequest': jsonHandler.badRequest,
     '/unauthorized': jsonHandler.unauthorized,
@@ -32,7 +38,74 @@ const processableURLCollection = {
     '/internal': jsonHandler.internal,
     '/notImplemented': jsonHandler.notImplemented,
   },
+  HEAD: {
+    '/getCharacter': jsonHandler.getCharacter,
+  },
+  POST: {
+    '/saveCharacter': jsonHandler.saveCharacter,
+  },
   notFound: jsonHandler.notFound,
+};
+
+const validateCharacterStat = (statValue) => {
+  const num = parseInt(statValue, 10);
+  return !Number.isNaN(num) && Number.isInteger(num) && num > -10 && num < 10;
+};
+
+const validateCharacter = (objectToValidate) => objectToValidate.name
+  && objectToValidate.stats
+  && validateCharacterStat(objectToValidate.stats.per)
+  && validateCharacterStat(objectToValidate.stats.wit)
+  && validateCharacterStat(objectToValidate.stats.wil)
+  && validateCharacterStat(objectToValidate.stats.end)
+  && validateCharacterStat(objectToValidate.stats.str)
+  && validateCharacterStat(objectToValidate.stats.agi);
+
+const onPost = (request, response, parsedUrl, params) => {
+  if (parsedUrl.pathname === '/saveCharacter') {
+    let modified = params;
+    const body = [];
+
+    // log error if any and end response with 400 status
+    request.on('error', (err) => {
+      console.dir(err);
+      response.statusCode = 400;
+      response.end();
+    });
+
+    // push data on data stream
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+    // handle data on end of data stream
+    request.on('end', () => {
+      // get the body string
+      const bodyString = Buffer.concat(body).toString();
+      // parse the string to params
+      const bodyParams = query.parse(bodyString);
+
+      // create the userToAdd object
+      const userToAdd = {
+        name: bodyParams.name,
+        stats: bodyParams.stats,
+      };
+
+      // append userToAdd to params
+      modified = {
+        ...modified,
+        userToAdd,
+      };
+
+      if (validateCharacter(userToAdd)) {
+        // return Bad Request code
+        processableURLCollection.GET['/badRequest'](request, response, modified);
+      } else {
+        // perform POST request
+        processableURLCollection.POST[parsedUrl.pathname](request, response, modified);
+      }
+    });
+  }
 };
 
 /**
@@ -44,7 +117,9 @@ const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
   const params = query.parse(parsedUrl.query);
 
-  if (processableURLCollection[request.method][parsedUrl.pathname]) {
+  if (request.method === 'POST') {
+    onPost(request, response, parsedUrl, params);
+  } else if (processableURLCollection[request.method][parsedUrl.pathname]) {
     processableURLCollection[request.method][parsedUrl.pathname](request, response, params);
   } else {
     processableURLCollection.notFound(request, response, params);
