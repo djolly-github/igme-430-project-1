@@ -1,5 +1,8 @@
 const fs = require('fs');
 
+/**
+ * Collection of images available to the server
+ */
 const images = {
   ahool: {
     file: fs.readFileSync(`${__dirname}/../client/ahool.png`),

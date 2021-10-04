@@ -13,6 +13,7 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const processableURLCollection = {
   GET: {
     '/': htmlHandler.getIndex,
+    '/client.js': htmlHandler.getIndexJSMain,
     '/style.css': htmlHandler.getStyle,
     '/ahool.png': imgHandler.getAhool,
     '/chupacabra.png': imgHandler.getChupacabra,

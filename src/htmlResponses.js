@@ -16,6 +16,11 @@ const indexStyle = {
   type: 'text/css',
 };
 
+const indexJSMain = {
+  file: fs.readFileSync(`${__dirname}/../client/client.js`),
+  type: 'application/javascript',
+};
+
 /**
  * Gets a text file to load
  * @param {object} request XHR request object
@@ -42,7 +47,15 @@ const getIndex = (request, response) => getFile(request, response, indexPage);
  */
 const getStyle = (request, response) => getFile(request, response, indexStyle);
 
+/**
+ * Gets the main index script
+ * @param {object} request XHR request object
+ * @param {object} response XHR response object
+ */
+const getIndexJSMain = (request, response) => getFile(request, response, indexJSMain);
+
 module.exports = {
   getIndex,
+  getIndexJSMain,
   getStyle,
 };
