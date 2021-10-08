@@ -1,13 +1,13 @@
 // converts numerical code to status message
 // code: status number code
-const getStatus = (code) => {
+const getStatus = (code, method) => {
   switch (code) {
     case 200:
       return 'Completed Successfully';
     case 201:
       return 'Created Successfully';
     case 204:
-      return 'Character Exists';
+      return (method || '') === 'POST' ? 'Character Updated' : 'Character Exists';
     case 400:
       return 'Invalid Data';
     case 404:
@@ -36,6 +36,18 @@ const getCurrentValues = () => [
   controls.selectorOutfit.dataset.selected,
   controls.selectorWeapon.dataset.selected,
 ];
+
+// gets the current stat values in the right panel as a key-value object
+const getCurrentStats = () => {
+  return {
+    per: controls.characterStats.find(ref => ref.control.id === 'in-stat-per').control.value,
+    wit: controls.characterStats.find(ref => ref.control.id === 'in-stat-wit').control.value,
+    wil: controls.characterStats.find(ref => ref.control.id === 'in-stat-wil').control.value,
+    end: controls.characterStats.find(ref => ref.control.id === 'in-stat-end').control.value,
+    str: controls.characterStats.find(ref => ref.control.id === 'in-stat-str').control.value,
+    agi: controls.characterStats.find(ref => ref.control.id === 'in-stat-agi').control.value,
+  }
+};
 
 // updates the various background image urls to the selected species tilesheet (should run on species change)
 // urlToUse: string of image url, i.e. <species>.png e.g. werewolf.png

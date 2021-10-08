@@ -90,19 +90,32 @@ const onPost = (request, response, parsedUrl, params) => {
       // parse the string to params
       const bodyParams = query.parse(bodyString);
 
-      // create the userToAdd object
-      const userToAdd = {
+      // create the character object
+      const charToAdd = {
         name: bodyParams.name,
-        stats: bodyParams.stats,
+        stats: {
+          per: bodyParams.per,
+          wit: bodyParams.wit,
+          wil: bodyParams.wil,
+          end: bodyParams.end,
+          str: bodyParams.str,
+          agi: bodyParams.agi,
+        },
+        appearance: {
+          species: bodyParams.species,
+          pattern: bodyParams.pattern,
+          outfit: bodyParams.outfit,
+          weapon: bodyParams.weapon,
+        },
       };
 
       // append userToAdd to params
       modified = {
         ...modified,
-        userToAdd,
+        charToAdd,
       };
 
-      if (validateCharacter(userToAdd)) {
+      if (validateCharacter(charToAdd)) {
         // return Bad Request code
         processableURLCollection.GET['/badRequest'](request, response, modified);
       } else {

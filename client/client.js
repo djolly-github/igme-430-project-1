@@ -1,5 +1,5 @@
-const xhrOnLoad = (xhr) => {
-  controls.headerStatus.control.innerHTML = getStatus(xhr.status);
+const xhrOnLoad = (xhr, method) => {
+  controls.headerStatus.control.innerHTML = getStatus(xhr.status, method);
   if (xhr.status === 200 && xhr.response) {
     const parsedResponse = JSON.parse(xhr.response);
     updateLeftPanelByIndex(controls.selectorSpecies, parsedResponse.appearance.species);
@@ -11,15 +11,34 @@ const xhrOnLoad = (xhr) => {
 }
 
 const getCharacter = (isCheck) => {
-  const name = controls.headerFind.control.value;
   const method = isCheck ? 'HEAD' : 'GET';
+  const name = controls.headerFind.control.value;
   const data = `name=${name}`;
 
   const xhr = new XMLHttpRequest();
   xhr.open(method, `/getCharacter?${data}`);
   xhr.setRequestHeader('Accept', 'application/json');
-  xhr.onload = () => xhrOnLoad(xhr);
+  xhr.onload = () => xhrOnLoad(xhr, method);
   xhr.send();
+}
+
+const saveCharacter = () => {
+  const method = 'POST';
+  const name = controls.characterName.control.value;
+  const design = getCurrentValues();
+  const stats = getCurrentStats();
+  const data = `name=${name}`
+    + `&species=${design[0]}&pattern=${design[1]}&outfit=${design[2]}&weapon=${design[3]}`
+    + `&per=${stats.per}&wit=${stats.wit}&wil=${stats.wil}`
+    + `&str=${stats.str}&end=${stats.end}&agi=${stats.agi}`;
+  console.log(data);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open(method, '/saveCharacter');
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  xhr.setRequestHeader('Accept', 'application/json');
+  xhr.onload = () => xhrOnLoad(xhr, method);
+  xhr.send(data);
 }
 
 window.onload = () => {
@@ -52,7 +71,8 @@ window.onload = () => {
   // set right panel listeners
   controls.characterSave.control.addEventListener('click', (e) => {
     if (validate()) {
-      controls.headerStatus.control.innerHTML = getStatus(501);
+      //controls.headerStatus.control.innerHTML = getStatus(501);
+      saveCharacter();
     } else {
       controls.headerStatus.control.innerHTML = getStatus(400);
     }

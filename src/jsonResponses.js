@@ -206,7 +206,15 @@ const getCharacter = (request, response, params) => {
 };
 
 const saveCharacter = (request, response, params) => {
-  console.log(`test save | ${request} | ${response} | ${params}`);
+  const indexOfCharacter = findCharacter({ name: params.charToAdd.name });
+  if (indexOfCharacter > -1) {
+    characters[indexOfCharacter] = params.charToAdd;
+    respond(request, response, 204, request.headers.accept);
+  } else {
+    characters.push(params.charToAdd);
+    respond(request, response, 201, request.headers.accept);
+  }
+  console.log(characters);
 };
 
 module.exports = {
