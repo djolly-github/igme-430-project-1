@@ -7,6 +7,7 @@ const xhrOnLoad = (xhr, method) => {
     updateLeftPanelByIndex(controls.selectorOutfit, parsedResponse.appearance.outfit);
     updateLeftPanelByIndex(controls.selectorWeapon, parsedResponse.appearance.weapon);
     setRightPanelFormValues(parsedResponse.name, parsedResponse.stats);
+    setRightPanelImages(getCurrentValues());
   }
 }
 
