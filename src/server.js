@@ -4,6 +4,7 @@ const query = require('querystring');
 const htmlHandler = require('./htmlResponses');
 const jsonHandler = require('./jsonResponses');
 const imgHandler = require('./imageResponses');
+const characterUtils = require('./characterUtils');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -47,25 +48,6 @@ const processableURLCollection = {
   notFound: jsonHandler.notFound,
 };
 
-const validateCharacterValue = (statValue) => {
-  const num = parseInt(statValue, 10);
-  return !Number.isNaN(num) && Number.isInteger(num) && num > -10 && num < 10;
-};
-
-const validateCharacter = (objectToValidate) => objectToValidate.name
-  && objectToValidate.stats
-  && objectToValidate.appearance
-  && validateCharacterValue(objectToValidate.stats.per)
-  && validateCharacterValue(objectToValidate.stats.wit)
-  && validateCharacterValue(objectToValidate.stats.wil)
-  && validateCharacterValue(objectToValidate.stats.end)
-  && validateCharacterValue(objectToValidate.stats.str)
-  && validateCharacterValue(objectToValidate.stats.agi)
-  && validateCharacterValue(objectToValidate.appearance.species)
-  && validateCharacterValue(objectToValidate.appearance.pattern)
-  && validateCharacterValue(objectToValidate.appearance.outfit)
-  && validateCharacterValue(objectToValidate.appearance.weapon);
-
 const onPost = (request, response, parsedUrl, params) => {
   if (parsedUrl.pathname === '/saveCharacter') {
     let modified = params;
@@ -91,23 +73,7 @@ const onPost = (request, response, parsedUrl, params) => {
       const bodyParams = query.parse(bodyString);
 
       // create the character object
-      const charToAdd = {
-        name: bodyParams.name,
-        stats: {
-          per: bodyParams.per,
-          wit: bodyParams.wit,
-          wil: bodyParams.wil,
-          end: bodyParams.end,
-          str: bodyParams.str,
-          agi: bodyParams.agi,
-        },
-        appearance: {
-          species: bodyParams.species,
-          pattern: bodyParams.pattern,
-          outfit: bodyParams.outfit,
-          weapon: bodyParams.weapon,
-        },
-      };
+      const charToAdd = characterUtils.bodyToCharacterObject(bodyParams);
 
       // append userToAdd to params
       modified = {
@@ -115,7 +81,7 @@ const onPost = (request, response, parsedUrl, params) => {
         charToAdd,
       };
 
-      if (validateCharacter(charToAdd)) {
+      if (characterUtils.validateCharacter(charToAdd)) {
         // return Bad Request code
         processableURLCollection.GET['/badRequest'](request, response, modified);
       } else {

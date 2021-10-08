@@ -1,3 +1,6 @@
+const responseUtils = require('./responseUtils');
+const characterUtils = require('./characterUtils');
+
 const characters = [
   {
     name: 'Test Character',
@@ -19,39 +22,6 @@ const characters = [
 ];
 
 /**
- * Searches the characters array for the index of a specified character (compares the .name field)
- * @param {object} other the character whose .name to search for
- * @returns the index of the character, or -1 if none exists
- */
-const findCharacter = (other) => characters.findIndex((character) => character.name === other.name);
-
-/**
- * Converts JSON to XML
- * @param {object} obj the JSON object to convert
- * @returns XML-formatted string
- */
-const toXML = (obj) => {
-  let toReturn = '<response>';
-  Object.keys(obj).forEach((key) => {
-    toReturn += `<${key}>${obj[key]}</${key}>`;
-  });
-  return `${toReturn}</response>`;
-};
-
-/**
- * Gets valid return Content-Types for this server application
- * @param {string} typeToCheck the Content-Type to check
- * @returns typeToCheck if valid, or 'application/json'
- */
-const getValidType = (typeToCheck) => {
-  if (typeToCheck === 'application/json' || typeToCheck === 'text/xml') {
-    return typeToCheck;
-  }
-
-  return 'application/json';
-};
-
-/**
  * General response writing method
  * @param {object} request XHR request object
  * @param {object} response XHR response object
@@ -60,13 +30,13 @@ const getValidType = (typeToCheck) => {
  * @param {object} data data to write
  */
 const respond = (request, response, status, type, data) => {
-  const validatedType = getValidType(type);
+  const validatedType = responseUtils.getValidType(type);
   response.writeHead(status, { 'Content-Type': validatedType });
 
   if (data) {
     let toWrite = data;
     if (validatedType === 'text/xml') {
-      toWrite = toXML(data);
+      toWrite = responseUtils.toXML(data);
     } else {
       toWrite = JSON.stringify(data);
     }
@@ -192,8 +162,17 @@ const unauthorized = (request, response, params) => {
   }
 };
 
+/**
+ * Routing handler for /getCharacter
+ * @param {object} request XHR request object
+ * @param {object} response XHR response object
+ * @param {object} params GET/POST parameters, if any
+ */
 const getCharacter = (request, response, params) => {
-  const indexOfCharacter = findCharacter({ name: params.name });
+  const indexOfCharacter = characterUtils.findCharacter(
+    characters, { name: params.name },
+  );
+
   if (indexOfCharacter > -1) {
     if (request.method === 'HEAD') {
       respond(request, response, 204, request.headers.accept);
@@ -205,8 +184,17 @@ const getCharacter = (request, response, params) => {
   }
 };
 
+/**
+ * Routing handler for /saveCharacter
+ * @param {object} request XHR request object
+ * @param {object} response XHR response object
+ * @param {object} params POST parameters
+ */
 const saveCharacter = (request, response, params) => {
-  const indexOfCharacter = findCharacter({ name: params.charToAdd.name });
+  const indexOfCharacter = characterUtils.findCharacter(
+    characters, { name: params.charToAdd.name },
+  );
+
   if (indexOfCharacter > -1) {
     characters[indexOfCharacter] = params.charToAdd;
     respond(request, response, 204, request.headers.accept);
@@ -214,7 +202,6 @@ const saveCharacter = (request, response, params) => {
     characters.push(params.charToAdd);
     respond(request, response, 201, request.headers.accept);
   }
-  console.log(characters);
 };
 
 module.exports = {
