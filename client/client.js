@@ -32,7 +32,6 @@ const saveCharacter = () => {
     + `&species=${design[0]}&pattern=${design[1]}&outfit=${design[2]}&weapon=${design[3]}`
     + `&per=${stats.per}&wit=${stats.wit}&wil=${stats.wil}`
     + `&str=${stats.str}&end=${stats.end}&agi=${stats.agi}`;
-  console.log(data);
 
   const xhr = new XMLHttpRequest();
   xhr.open(method, '/saveCharacter');
@@ -80,9 +79,14 @@ window.onload = () => {
   });
   controls.characterReset.control.addEventListener('click', (e) => {
     controls.characterName.control.value = '';
-    controls.characterStats.forEach((controlRef) => {
-      controlRef.control.value = 0;
+    Object.keys(controls.characterStats).forEach((key) => {
+      controls.characterStats[key].control.value = 0;
     });
+    updateLeftPanelByIndex(controls.selectorSpecies, 0);
+    updateLeftPanelByIndex(controls.selectorPattern, 0);
+    updateLeftPanelByIndex(controls.selectorOutfit, 0);
+    updateLeftPanelByIndex(controls.selectorWeapon, 0);
+    setRightPanelImages(getCurrentValues());
   });
 
   // set header listeners

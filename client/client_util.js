@@ -40,12 +40,12 @@ const getCurrentValues = () => [
 // gets the current stat values in the right panel as a key-value object
 const getCurrentStats = () => {
   return {
-    per: controls.characterStats.find(ref => ref.control.id === 'in-stat-per').control.value,
-    wit: controls.characterStats.find(ref => ref.control.id === 'in-stat-wit').control.value,
-    wil: controls.characterStats.find(ref => ref.control.id === 'in-stat-wil').control.value,
-    end: controls.characterStats.find(ref => ref.control.id === 'in-stat-end').control.value,
-    str: controls.characterStats.find(ref => ref.control.id === 'in-stat-str').control.value,
-    agi: controls.characterStats.find(ref => ref.control.id === 'in-stat-agi').control.value,
+    per: controls.characterStats.per.control.value,
+    wit: controls.characterStats.wit.control.value,
+    wil: controls.characterStats.wil.control.value,
+    end: controls.characterStats.end.control.value,
+    str: controls.characterStats.str.control.value,
+    agi: controls.characterStats.agi.control.value,
   }
 };
 
@@ -109,26 +109,10 @@ const setRightPanelImages = (currentValues) => {
 // sets the values of the right panel stats and name
 const setRightPanelFormValues = (name, stats) => {
   controls.characterName.control.value = name;
-  controls.characterStats.forEach((controlRef) => {
-    switch(controlRef.control.id) {
-      case 'in-stat-per':
-        controlRef.control.value = stats.per;
-        break;
-      case 'in-stat-wit':
-        controlRef.control.value = stats.wit;
-        break;
-      case 'in-stat-wil':
-        controlRef.control.value = stats.wil;
-        break;
-      case 'in-stat-end':
-        controlRef.control.value = stats.end;
-        break;
-      case 'in-stat-str':
-        controlRef.control.value = stats.str;
-        break;
-      case 'in-stat-agi':
-        controlRef.control.value = stats.agi;
-        break;
-    }
-  })  
+  controls.characterStats.per.control.value = stats.per;
+  controls.characterStats.wit.control.value = stats.wit;
+  controls.characterStats.wil.control.value = stats.wil;
+  controls.characterStats.end.control.value = stats.end;
+  controls.characterStats.str.control.value = stats.str;
+  controls.characterStats.agi.control.value = stats.agi;
 };

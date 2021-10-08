@@ -48,8 +48,15 @@ const processableURLCollection = {
   notFound: jsonHandler.notFound,
 };
 
-const onPost = (request, response, parsedUrl, params) => {
-  if (parsedUrl.pathname === '/saveCharacter') {
+/**
+ * Handles POST requests which require onData and onEnd handling in order to process
+ * @param {object} request XHR request object
+ * @param {object} response XHR response object
+ * @param {*} pathname The path of the POST request
+ * @param {*} params The params for the POST request
+ */
+const onPost = (request, response, pathname, params) => {
+  if (pathname === '/saveCharacter') {
     let modified = params;
     const body = [];
 
@@ -82,18 +89,18 @@ const onPost = (request, response, parsedUrl, params) => {
       };
 
       if (characterUtils.validateCharacter(charToAdd)) {
+        // perform POST request
+        processableURLCollection.POST[pathname](request, response, modified);
+      } else {
         // return Bad Request code
         processableURLCollection.GET['/badRequest'](request, response, modified);
-      } else {
-        // perform POST request
-        processableURLCollection.POST[parsedUrl.pathname](request, response, modified);
       }
     });
   }
 };
 
 /**
- * server requestListener
+ * server request listener
  * @param {object} request XHR request object
  * @param {object} response XHR response object
  */
@@ -102,7 +109,7 @@ const onRequest = (request, response) => {
   const params = query.parse(parsedUrl.query);
 
   if (request.method === 'POST') {
-    onPost(request, response, parsedUrl, params);
+    onPost(request, response, parsedUrl.pathname, params);
   } else if (processableURLCollection[request.method][parsedUrl.pathname]) {
     processableURLCollection[request.method][parsedUrl.pathname](request, response, params);
   } else {

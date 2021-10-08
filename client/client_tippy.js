@@ -61,49 +61,49 @@ const initTippy = () => {
       content: 'Resets all stat/name inputs back to default',
     }),
   };
-  controls.characterStats = [
-    {
+  controls.characterStats = {
+    per: {
       control: document.querySelector('#in-stat-per'),
       tooltip: tippy('#in-stat-per', {
         ...defaultTooltipOptions,
         content: 'Character\'s perception',
       }),
     },
-    {
+    wit: {
       control: document.querySelector('#in-stat-wit'),
       tooltip: tippy('#in-stat-wit', {
         ...defaultTooltipOptions,
         content: 'Character\'s wit',
       }),
     },
-    {
+    wil: {
       control: document.querySelector('#in-stat-wil'),
       tooltip: tippy('#in-stat-wil', {
         ...defaultTooltipOptions,
         content: 'Character\'s will',
       }),
     },
-    {
+    end: {
       control: document.querySelector('#in-stat-end'),
       tooltip: tippy('#in-stat-end', {
         ...defaultTooltipOptions,
         content: 'Character\'s endurance',
       }),
     },
-    {
+    str: {
       control: document.querySelector('#in-stat-str'),
       tooltip: tippy('#in-stat-str', {
         ...defaultTooltipOptions,
         content: 'Character\'s strength',
       }),
     },
-    {
+    agi: {
       control: document.querySelector('#in-stat-agi'),
       tooltip: tippy('#in-stat-agi', {
         ...defaultTooltipOptions,
         content: 'Character\'s agility',
       }),
     },
-  ];
+  };
 
 }

@@ -28,7 +28,7 @@ const controls = {
   characterName: null,
 };
 
-// available options for the left panel
+// available options for the left panel; defines their labels
 const options = {
   species: [
     'werewolf',

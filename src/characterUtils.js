@@ -34,11 +34,13 @@ const bodyToCharacterObject = (bodyParams) => ({
 /**
  * Ensures a stat is a number between -10 and 10
  * @param {string|number} statValue the value to validate
+ * @param {number} min the min value statValue can be (inclusive)
+ * @param {number} max the max value statValue can be (inclusive)
  * @returns true if valid, false if invalid
  */
-const validateCharacterValue = (statValue) => {
+const validateCharacterValue = (statValue, min, max) => {
   const num = parseInt(statValue, 10);
-  return !Number.isNaN(num) && Number.isInteger(num) && num > -10 && num < 10;
+  return !Number.isNaN(num) && Number.isInteger(num) && num >= min && num <= max;
 };
 
 /**
@@ -49,16 +51,16 @@ const validateCharacterValue = (statValue) => {
 const validateCharacter = (characterToValidate) => characterToValidate.name
   && characterToValidate.stats
   && characterToValidate.appearance
-  && validateCharacterValue(characterToValidate.stats.per)
-  && validateCharacterValue(characterToValidate.stats.wit)
-  && validateCharacterValue(characterToValidate.stats.wil)
-  && validateCharacterValue(characterToValidate.stats.end)
-  && validateCharacterValue(characterToValidate.stats.str)
-  && validateCharacterValue(characterToValidate.stats.agi)
-  && validateCharacterValue(characterToValidate.appearance.species)
-  && validateCharacterValue(characterToValidate.appearance.pattern)
-  && validateCharacterValue(characterToValidate.appearance.outfit)
-  && validateCharacterValue(characterToValidate.appearance.weapon);
+  && validateCharacterValue(characterToValidate.stats.per, -10, 10)
+  && validateCharacterValue(characterToValidate.stats.wit, -10, 10)
+  && validateCharacterValue(characterToValidate.stats.wil, -10, 10)
+  && validateCharacterValue(characterToValidate.stats.end, -10, 10)
+  && validateCharacterValue(characterToValidate.stats.str, -10, 10)
+  && validateCharacterValue(characterToValidate.stats.agi, -10, 10)
+  && validateCharacterValue(characterToValidate.appearance.species, 0, 4)
+  && validateCharacterValue(characterToValidate.appearance.pattern, 0, 4)
+  && validateCharacterValue(characterToValidate.appearance.outfit, 0, 4)
+  && validateCharacterValue(characterToValidate.appearance.weapon, 0, 4);
 
 module.exports = {
   bodyToCharacterObject,
